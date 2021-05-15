@@ -7,6 +7,7 @@ const progress = document.querySelector(".progress");
 const progressContainer = document.querySelector(".progress-container");
 const title = document.querySelector("#title");
 const cover = document.querySelector("#cover");
+const darkmodeBtn = document.querySelector("#darkmode");
 
 // song titles
 const songs = [
@@ -87,6 +88,20 @@ function setProgress(e) {
     audio.currentTime = (clickX / width) * duration;
 }
 
+function setDarkmode() {
+    let currnetTheme = document.documentElement.getAttribute("data-theme");
+    let switchToTheme = currnetTheme === "dark" ? "light" : "dark";
+    // currnetTheme === "dark" ?  darkmodeBtn.querySelector("i.fas").classList.add("fa-sun") : darkmodeBtn.querySelector("i.fas").classList.add("fa-moon") ;
+    if(currnetTheme === 'light') {
+        darkmodeBtn.querySelector("i.fas").classList.remove("fa-moon") ;
+        darkmodeBtn.querySelector("i.fas").classList.add("fa-sun") ;
+    } else {
+        darkmodeBtn.querySelector("i.fas").classList.remove("fa-sun") ;
+        darkmodeBtn.querySelector("i.fas").classList.add("fa-moon") ;
+    }
+    document.documentElement.setAttribute("data-theme", switchToTheme);
+}
+
 // change song events
 prevBtn.addEventListener("click", prevSong);
 nextBtn.addEventListener("click", nextSong);
@@ -95,4 +110,8 @@ audio.addEventListener("timeupdate", updateProgress);
 
 progressContainer.addEventListener("click", setProgress);
 
-audio.addEventListener('ended', nextSong)
+audio.addEventListener("ended", nextSong);
+
+document.documentElement.setAttribute("data-theme", "light");
+
+darkmodeBtn.addEventListener("click", setDarkmode);
